@@ -47,6 +47,7 @@
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -83,6 +84,7 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
+  MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -91,6 +93,17 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  for (int i = 0; i <= 11; i++){
+		  for (int j = 0; j <=11; j++){
+			  for (int k = 0; k <= 11; k++){
+				  clearAllClock();
+				  setNumberOnClock(i);
+				  setNumberOnClock(j);
+				  setNumberOnClock(k);
+				  HAL_Delay(100);
+			  }
+		  }
+	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -133,8 +146,80 @@ void SystemClock_Config(void)
   }
 }
 
-/* USER CODE BEGIN 4 */
+/**
+  * @brief GPIO Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_GPIO_Init(void)
+{
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
 
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOA, Led0_Pin|Led1_Pin|Led2_Pin|Led3_Pin
+                          |Led4_Pin|Led5_Pin|Led6_Pin|Led7_Pin
+                          |Led8_Pin|Led9_Pin|Led10_Pin|Led11_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : Led0_Pin Led1_Pin Led2_Pin Led3_Pin
+                           Led4_Pin Led5_Pin Led6_Pin Led7_Pin
+                           Led8_Pin Led9_Pin Led10_Pin Led11_Pin */
+  GPIO_InitStruct.Pin = Led0_Pin|Led1_Pin|Led2_Pin|Led3_Pin
+                          |Led4_Pin|Led5_Pin|Led6_Pin|Led7_Pin
+                          |Led8_Pin|Led9_Pin|Led10_Pin|Led11_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+}
+
+/* USER CODE BEGIN 4 */
+void clearAllClock(){
+	HAL_GPIO_WritePin(GPIOA, Led0_Pin | Led1_Pin | Led2_Pin |Led3_Pin | Led4_Pin | Led5_Pin | Led6_Pin | Led7_Pin | Led8_Pin | Led9_Pin | Led10_Pin | Led11_Pin , SET);
+}
+void setNumberOnClock(int num){
+	switch(num){
+	case 0:
+		HAL_GPIO_WritePin(Led0_GPIO_Port, Led0_Pin, RESET);
+		break;
+	case 1:
+		HAL_GPIO_WritePin(Led1_GPIO_Port, Led1_Pin, RESET);
+		break;
+	case 2:
+		HAL_GPIO_WritePin(Led2_GPIO_Port, Led2_Pin, RESET);
+		break;
+	case 3:
+		HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, RESET);
+		break;
+	case 4:
+		HAL_GPIO_WritePin(Led4_GPIO_Port, Led4_Pin, RESET);
+		break;
+	case 5:
+		HAL_GPIO_WritePin(Led5_GPIO_Port, Led5_Pin, RESET);
+		break;
+	case 6:
+		HAL_GPIO_WritePin(Led6_GPIO_Port, Led6_Pin, RESET);
+		break;
+	case 7:
+		HAL_GPIO_WritePin(Led7_GPIO_Port, Led7_Pin, RESET);
+		break;
+	case 8:
+		HAL_GPIO_WritePin(Led8_GPIO_Port, Led8_Pin, RESET);
+		break;
+	case 9:
+		HAL_GPIO_WritePin(Led9_GPIO_Port, Led9_Pin, RESET);
+		break;
+	case 10:
+		HAL_GPIO_WritePin(Led10_GPIO_Port, Led10_Pin, RESET);
+		break;
+	case 11:
+		HAL_GPIO_WritePin(Led11_GPIO_Port, Led11_Pin, RESET);
+		break;
+	}
+}
 /* USER CODE END 4 */
 
 /**
