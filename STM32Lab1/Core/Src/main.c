@@ -54,23 +54,7 @@ static void MX_GPIO_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void Display(int i){
-	switch(i){
-	case 1:
-		HAL_GPIO_WritePin(RedLed_GPIO_Port, RedLed_Pin, RESET);
-		HAL_GPIO_WritePin(YellowLed_GPIO_Port, YellowLed_Pin, SET);
-		HAL_GPIO_WritePin(GreenLed_GPIO_Port, GreenLed_Pin, SET);
-		break;
-	case 2:
-		HAL_GPIO_WritePin(RedLed_GPIO_Port, RedLed_Pin, SET);
-		HAL_GPIO_WritePin(YellowLed_GPIO_Port, YellowLed_Pin, RESET);
-		HAL_GPIO_WritePin(GreenLed_GPIO_Port, GreenLed_Pin, SET);
-	case 3:
-		HAL_GPIO_WritePin(RedLed_GPIO_Port, RedLed_Pin, SET);
-		HAL_GPIO_WritePin(YellowLed_GPIO_Port, YellowLed_Pin, SET);
-		HAL_GPIO_WritePin(GreenLed_GPIO_Port, GreenLed_Pin, RESET);
-	}
-}
+
 /* USER CODE END 0 */
 
 /**
@@ -118,7 +102,9 @@ int main(void)
   {
 	  switch(CurrentState){
 	  case RedOn:
-		  Display(RedOn);
+			HAL_GPIO_WritePin(RedLed_GPIO_Port, RedLed_Pin, RESET);
+			HAL_GPIO_WritePin(YellowLed_GPIO_Port, YellowLed_Pin, SET);
+			HAL_GPIO_WritePin(GreenLed_GPIO_Port, GreenLed_Pin, SET);
 		  counter--;
 		  if(counter <=0){
 			  CurrentState = GreenOn;
@@ -126,7 +112,9 @@ int main(void)
 		  }
 		  break;
 	  case YellowOn:
-		  Display(YellowOn);
+			HAL_GPIO_WritePin(RedLed_GPIO_Port, RedLed_Pin, SET);
+			HAL_GPIO_WritePin(YellowLed_GPIO_Port, YellowLed_Pin, RESET);
+			HAL_GPIO_WritePin(GreenLed_GPIO_Port, GreenLed_Pin, SET);
 		  counter--;
 		  if(counter <= 0){
 			  CurrentState = RedOn;
@@ -134,12 +122,15 @@ int main(void)
 		  }
 		  break;
 	  case GreenOn:
-		  Display (GreenOn);
+			HAL_GPIO_WritePin(RedLed_GPIO_Port, RedLed_Pin, SET);
+			HAL_GPIO_WritePin(YellowLed_GPIO_Port, YellowLed_Pin, SET);
+			HAL_GPIO_WritePin(GreenLed_GPIO_Port, GreenLed_Pin, RESET);
 		  counter--;
 		  if(counter <= 0){
 			  CurrentState = YellowOn;
 			  counter = 2;
 		  }
+		  break;
 	  }
 	  HAL_Delay(1000);
     /* USER CODE END WHILE */
