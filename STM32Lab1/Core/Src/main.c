@@ -64,9 +64,8 @@ static void MX_GPIO_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-//	enum LightState {RedOnYellowOf, RedOfYellowOn};
-//	LightState CurrentState = RedOnYellowOf;
-	int CurrentState = 0;
+	enum LightState  {RedOnYellowOf, RedOfYellowOn};
+	enum LightState CurrentState = RedOnYellowOf;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
